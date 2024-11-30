@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "express": "^4.21.1",
+    "node.js": "^0.0.1-security",
+    "sqlite": "^5.1.1"
+  }
+}
