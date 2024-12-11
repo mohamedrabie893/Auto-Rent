@@ -77,6 +77,15 @@ server.post(`/user/register`, (req, res) => {
     })
 })
 
+server.post('/user/logout', (req, res) => {
+    res.cookie('authToken', '', {
+        httpOnly: true,
+        sameSite: 'none',
+        secure:true,
+        expiresIn: '1h'
+    })
+    return res.status(200).json({ message: "Logged out successfully" })
+})
 
 server.post(`/flights/addrent`, verifyToken, (req, res) => {
     const isAdmin = req.userDetails.isAdmin;
