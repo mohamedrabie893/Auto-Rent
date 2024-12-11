@@ -22,6 +22,7 @@ const LoginForm = () => {
       console.log(userData);
       localStorage.setItem('isAdmin', userData.admin);
       localStorage.setItem('token', userData.token);
+      localStorage.setItem('userId', userData.id);
       setMessage('Successful');
       navigate('/');
     }

@@ -51,6 +51,7 @@ server.post('/user/login', (req, res) => {
                     secure:true,
                     expiresIn: '1h'
                 })
+                console.log(res.cookie);
                 return res.status(200).json({ id: userID, admin: isAdmin, token })
             }
         })
@@ -87,10 +88,10 @@ server.post('/user/logout', (req, res) => {
     return res.status(200).json({ message: "Logged out successfully" })
 })
 
-server.post(`/flights/addrent`, verifyToken, (req, res) => {
-    const isAdmin = req.userDetails.isAdmin;
-    if (isAdmin !== 1)
-        return res.status(403).send("you are not an admin")
+server.post(`/rents/addrent`, (req, res) => {
+    // const isAdmin = req.userDetails.isAdmin;
+    // if (isAdmin !== 1)
+    //     return res.status(403).send("you are not an admin")
     const type = req.body.type
     const model = req.body.model
     const availability = parseInt(req.body.availability, 10)
@@ -178,10 +179,10 @@ server.get(`/rents/search`, (req, res) => {
 
 })
 
-server.put(`/book`, verifyToken, (req, res) => {
-    const isAdmin = req.userDetails.isAdmin;
-    if (isAdmin !== 1)
-        return res.status(403).send("you are not an admin")
+server.put(`/book`, (req, res) => {
+    // const isAdmin = req.userDetails.isAdmin;
+    // if (isAdmin !== 1)
+    //     return res.status(403).send("you are not an admin")
 
     let type = req.query.type
     let model = req.query.model
@@ -195,7 +196,7 @@ server.put(`/book`, verifyToken, (req, res) => {
         }
         else {
 
-            let rentID = row.ID
+            let rentID = req.body.rentID
             let userID = req.body.userID
             let query2 = `INSERT INTO BOOKING (USER_ID,RENT_ID) VALUES (${parseInt(userID, 10)},${rentID})`
             console.log(query2)

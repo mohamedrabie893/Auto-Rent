@@ -8,7 +8,7 @@ const AddRentForm = () => {
   const [message, setMessage] = useState(''); 
 
   const addRent = () => {
-    fetch('http://localhost:555/flights/addrent', {
+    fetch('http://localhost:555/rents/addrent', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
