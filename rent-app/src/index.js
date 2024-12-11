@@ -10,6 +10,7 @@ import RegisterForm from './Components/RegisterForm';
 import LoginForm from './Components/LoginForm';
 import AddRentForm from './Components/AddRentForm';
 import RentList from './Components/RentList';
+import UserRents from './Components/UserRents';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,6 +23,7 @@ root.render(
 
           <Route path="/add-rent" element={<AddRentForm />} />
           <Route path="/rents" element={<RentList />} />
+          <Route path="/my-rents" element={<UserRents />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
         </Route>
