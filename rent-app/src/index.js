@@ -3,11 +3,30 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Routes, Route } from "react-router";
+import Root from './Components/Root';
+import Home from './Components/Home';
+import RegisterForm from './Components/RegisterForm';
+import LoginForm from './Components/LoginForm';
+import AddRentForm from './Components/AddRentForm';
+import RentList from './Components/RentList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Root />}>
+          {/* renders into the outlet in <Root> at "/" */}
+          <Route index element={<Home />} />
+
+          <Route path="/add-rent" element={<AddRentForm />} />
+          <Route path="/rents" element={<RentList />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/login" element={<LoginForm />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
