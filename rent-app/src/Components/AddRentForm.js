@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const AddRentForm = () => {
   const [type, setType] = useState('');
   const [model, setModel] = useState('');
-  const [availability, setAvailability] = useState('');
   const [quantity, setQuantity] = useState('');
   const [message, setMessage] = useState(''); 
 
@@ -13,7 +12,7 @@ const AddRentForm = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({type, model, availability, quantity }), 
+      body: JSON.stringify({type, model, quantity }), 
       credentials:"include"
     })
     .then((response) => {
@@ -45,13 +44,6 @@ const AddRentForm = () => {
           placeholder="Model" 
           value={model} 
           onChange={(e) => setModel(e.target.value)} 
-          required 
-        /><br />
-        <input 
-          type="number" 
-          placeholder="Availability" 
-          value={availability} 
-          onChange={(e) => setAvailability(e.target.value)} 
           required 
         /><br />
         <input 

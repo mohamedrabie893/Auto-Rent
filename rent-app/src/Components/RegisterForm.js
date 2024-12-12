@@ -19,12 +19,12 @@ const RegisterForm = () => {
           throw new Error('Registration failed');
         }
         setMessage('Registration successful');
-        alert(message); 
+        alert('Registration successful'); 
         navigate('/login');
       })
       .catch((error) => {
         setMessage(error.message);
-        alert(message); 
+        alert(error.message); 
       });
   };
   useEffect(() => {
