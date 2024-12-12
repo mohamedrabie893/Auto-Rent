@@ -94,17 +94,39 @@ server.post(`/rents/addrent`, (req, res) => {
     //     return res.status(403).send("you are not an admin")
     const type = req.body.type
     const model = req.body.model
-    const availability = parseInt(req.body.availability, 10)
     const quantity = parseInt(req.body.quantity, 10)
-    let query = `INSERT INTO RENT (TYPE,MODEL,AVAILABILITY,QUANTITY) VALUES
-    (?,?,?,?)`
-    db.run(query, [type, model, availability, quantity], (err) => {
+    let query = `INSERT INTO RENT (TYPE,MODEL,QUANTITY) VALUES
+    (?,?,?)`
+    db.run(query, [type, model, quantity], (err) => {
         if (err) {
             console.log(err)
             return res.send(err)
         }
         else {
             return res.send(`Rent added successfully`)
+        }
+    })
+
+})
+
+server.delete(`/rents/deleterent`, (req, res) => {
+    // const isAdmin = req.userDetails.isAdmin;
+    // if (isAdmin !== 1)
+    //     return res.status(403).send("you are not an admin")
+    const type = req.body.type
+    const model = req.body.model
+    
+    const rentID = req.body.rentID
+    let query = `DELETE FROM RENT WHERE ID=? AND TYPE=? AND MODEL=?`
+
+    console.log(query);
+    db.run(query, [rentID, type, model], (err) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        else {
+            return res.send(`Rent deleted successfully`)
         }
     })
 
@@ -129,6 +151,30 @@ server.get(`/rents`, (req, res) => {
 server.get(`/rents/search/:id`, (req, res) => {
     const query = `SELECT * FROM RENT WHERE ID=${req.params.id}`
     db.get(query, (err, row) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        else if (!row)
+            return res.send(`rent with id ${req.params.id} not found`)
+        else
+            return res.send(row)
+    })
+})
+
+server.get(`/userrents/:id`, (req, res) => {
+    // const query = `SELECT * FROM BOOKING WHERE USER_ID=${req.params.id}`
+    const query = `SELECT 
+    BOOKING.*, 
+    RENT.*
+FROM 
+    BOOKING
+RIGHT JOIN 
+    RENT ON BOOKING.RENT_ID = RENT.ID
+WHERE 
+    BOOKING.USER_ID = ${req.params.id}`
+
+    db.all(query, (err, row) => {
         if (err) {
             console.log(err)
             return res.send(err)
@@ -198,6 +244,7 @@ server.put(`/book`, (req, res) => {
 
             let rentID = req.body.rentID
             let userID = req.body.userID
+            let quantity = req.body.quantity
             let query2 = `INSERT INTO BOOKING (USER_ID,RENT_ID) VALUES (${parseInt(userID, 10)},${rentID})`
             console.log(query2)
             db.run(query2, (err) => {
@@ -207,7 +254,7 @@ server.put(`/book`, (req, res) => {
                 }
                 else {
 
-                    let quantity = parseInt(row.QUANTITY, 10)
+                    quantity = parseInt(quantity, 10)
                     quantity = quantity - 1
                     query = `UPDATE RENT SET QUANTITY=${quantity} WHERE ID=${rentID}`
                     console.log(query)
