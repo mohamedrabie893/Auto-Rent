@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Agency</title>
+    <title>Auto Rent</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-    <h1>Travel Agency Management</h1>
+    <h1>Auto Rent</h1>
 
     <div class="form-section">
         <h3>User Registration</h3>
@@ -38,21 +38,9 @@
     </div>
 
     <div class="form-section">
-        <h3>View All Flights</h3>
+        <h3>View All Rents</h3>
         <button onclick="getAllFlights()">Get Flights</button>
-        <div id="flightsList"></div>
-    </div>
-
-   
-    <div class="form-section">
-        <h3>Add Flight (Admin)</h3>
-        <form id="addFlightForm">
-            <input type="text" id="origin" placeholder="Origin" required><br>
-            <input type="text" id="destination" placeholder="Destination" required><br>
-            <input type="date" id="flightDate" required><br>
-            <input type="number" id="quantity" placeholder="Quantity" required><br>
-            <button type="button" onclick="addFlight()">Add Flight</button>
-        </form>
+        <div id="rentsList"></div>
     </div>
 
     <script src="app.js"></script>

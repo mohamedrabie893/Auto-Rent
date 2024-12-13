@@ -186,10 +186,10 @@ WHERE
     })
 })
 
-server.put(`/rents/edit/:id/:quantity`, verifyToken, (req, res) => {
-    const isAdmin = req.userDetails.isAdmin;
-    if (isAdmin !== 1)
-        return res.status(403).send("you are not an admin")
+server.put(`/rents/edit`, (req, res) => {
+    // const isAdmin = req.userDetails.isAdmin;
+    // if (isAdmin !== 1)
+    //     return res.status(403).send("you are not an admin")
     const query = `UPDATE RENT SET QUANTITY=${parseInt(req.params.quantity, 10)}
     WHERE ID=${req.params.id}`
 

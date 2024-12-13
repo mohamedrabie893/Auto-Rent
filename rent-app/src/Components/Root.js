@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import logo from '../logo.png';
+import logo from '../logo.jpeg';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { Link } from "react-router";
 import { Outlet } from 'react-router';

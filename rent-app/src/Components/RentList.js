@@ -84,6 +84,36 @@ const RentList = () => {
     });
   }
 
+  const editRent = (rentID, quantity) => {
+    fetch(`http://localhost:555/rents/edit`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({id: rentID, quantity}), 
+      credentials:"include"
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to book rent. status code ${response.status}, message
+          ${JSON.stringify(response.text())}`);
+      }
+
+      setRents((prevItems) =>
+        prevItems.map((item) =>
+          item.ID === rentID ? { ...item, QUANTITY: quantity } : item
+        )
+      );
+
+      setMessage('Rent Updated successfully');
+      alert('Rent Updated successfully'); 
+    })
+    .catch((error) => {
+      setMessage(`Error: ${error.message}`); 
+      alert(error.message); 
+    });
+  }
+
   useEffect(() => {
     getAllRents();
 
@@ -105,11 +135,14 @@ const RentList = () => {
             {item.TYPE} - {item.MODEL} (Quantity: {item.QUANTITY})
 
             {isLoggedin &&
-              <Button disabled={item.QUANTITY === 0 || item.QUANTITY < 0} variant='primary' onClick={() => bookRent(item.TYPE, item.MODEL, item.ID, item.QUANTITY)}>Book Now</Button>
+              <Button disabled={item.QUANTITY === 0 || item.QUANTITY < 0} variant='dark' onClick={() => bookRent(item.TYPE, item.MODEL, item.ID, item.QUANTITY)}>Book Now</Button>
             }
 
             {localStorage.getItem('isAdmin') === 'true' && 
-                  <Button variant='danger' onClick={() => deleteRent(item.TYPE, item.MODEL, item.ID)}>Delete</Button>
+                <>
+                  <Button variant='warning' onClick={() => editRent(item.TYPE, item.MODEL, item.ID)}>Edit</Button>
+                  <Button variant='danger' onClick={() => deleteRent(item.TYPE, item.MODEL, item.ID, 5)}>Delete</Button>
+                </>
             }
           </li>
         ))}
