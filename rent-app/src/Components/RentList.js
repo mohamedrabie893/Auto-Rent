@@ -5,6 +5,9 @@ const RentList = () => {
   const [rents, setRents] = useState([]);
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [message, setMessage] = useState('');
+  const [isShowEdit, setIsShowEdit] = useState(false);
+  const [editItem, setEditItem] = useState(null);
+  const [editQuantity, setEditQuantity] = useState(0);
 
   const getAllRents = () => {
     fetch('http://localhost:555/rents')
@@ -84,13 +87,18 @@ const RentList = () => {
     });
   }
 
-  const editRent = (rentID, quantity) => {
-    fetch(`http://localhost:555/rents/edit/${rentID}`, {
+  const showEditRent = (item) => {
+    setIsShowEdit(true);
+    setEditItem(item);
+  }
+
+  const editRent = () => {
+    fetch(`http://localhost:555/rents/edit`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({quantity}), 
+      body: JSON.stringify({rentID: editItem.ID, quantity: editQuantity}), 
       credentials:"include"
     })
     .then((response) => {
@@ -101,12 +109,12 @@ const RentList = () => {
 
       setRents((prevItems) =>
         prevItems.map((item) =>
-          item.ID === rentID ? { ...item, QUANTITY: quantity } : item
+          item.ID === editItem.ID ? { ...item, QUANTITY: editQuantity } : item
         )
       );
 
-      setMessage('Rent Updated successfully');
-      alert('Rent Updated successfully'); 
+      setMessage('Quantity Updated successfully');
+      alert('Quantity Updated successfully'); 
     })
     .catch((error) => {
       setMessage(`Error: ${error.message}`); 
@@ -126,31 +134,50 @@ const RentList = () => {
   }, []);
 
   return (
-    <div className="form-section">
-      <h3>All Rents</h3>
-      {message}
-      <ul>
-        {rents.map((item) => (
-          <li className='list-item' key={item.ID}>
-            <div className='item-detail'>
-              {item.TYPE} - {item.MODEL} (Quantity: {item.QUANTITY})
-            </div>
-            <div className='item-actions'>
-              {isLoggedin &&
-                <Button disabled={item.QUANTITY === 0 || item.QUANTITY < 0} variant='dark' onClick={() => bookRent(item.TYPE, item.MODEL, item.ID, item.QUANTITY)}>Book Now</Button>
-              }
+    <>
+      {isShowEdit &&
+          <div className="form-section">
+            <h3>Edit Quantity For {editItem.TYPE} - {editItem.MODEL}</h3>
+            <form>
+              <input 
+                type="number" 
+                placeholder="Quantity" 
+                value={editQuantity} 
+                onChange={(e) => setEditQuantity(e.target.value)} 
+                required 
+                min="0"
+              /><br />
+              <button type="button" onClick={editRent}>Edit Car Quantity</button>
+            </form>
+            {message && <p>{message}</p>} 
+          </div>
+      }
+      <div className="form-section">
+        <h3>All Rents</h3>
+        {message}
+        <ul>
+          {rents.map((item) => (
+            <li className='list-item' key={item.ID}>
+              <div className='item-detail'>
+                {item.TYPE} - {item.MODEL} (Quantity: {item.QUANTITY})
+              </div>
+              <div className='item-actions'>
+                {isLoggedin &&
+                  <Button disabled={item.QUANTITY === 0 || item.QUANTITY < 0} variant='dark' onClick={() => bookRent(item.TYPE, item.MODEL, item.ID, item.QUANTITY)}>Book Now</Button>
+                }
 
-              {localStorage.getItem('isAdmin') === 'true' && 
-                  <>
-                    {/* <Button variant='warning' onClick={() => editRent(item.ID, 5)}>Edit</Button> */}
-                    <Button variant='danger' onClick={() => deleteRent(item.TYPE, item.MODEL, item.ID)}>Delete</Button>
-                  </>
-              }
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+                {localStorage.getItem('isAdmin') === 'true' && 
+                    <>
+                      <Button variant='warning' onClick={() => showEditRent(item)}>Edit</Button>
+                      <Button variant='danger' onClick={() => deleteRent(item.TYPE, item.MODEL, item.ID)}>Delete</Button>
+                    </>
+                }
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
 

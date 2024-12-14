@@ -172,29 +172,24 @@ WHERE
     })
 })
 
-server.put(`/rents/edit/:id`, (req, res) => {
-    // const isAdmin = req.userDetails.isAdmin;
-    // if (isAdmin !== 1)
-    //     return res.status(403).send("you are not an admin")
-    const query = `UPDATE RENT SET QUANTITY=${parseInt(req.params.quantity, 10)}
-    WHERE ID=${req.params.id}`
+server.put(`/rents/edit`, (req, res) => {
+    let rentID = req.body.rentID
+    let quantity = req.body.quantity;
+    quantity = parseInt(quantity, 10);
 
+    query = `UPDATE RENT SET QUANTITY=${quantity} WHERE ID=${rentID}`
+    console.log(query)
     db.run(query, (err) => {
         if (err) {
             console.log(err)
             return res.send(err)
         }
-        else {
-            return res.send(`rent updated successfully`)
-        }
+        else
+            res.send(`Rent updated successfully`)
     })
 })
 
 server.put(`/book`, (req, res) => {
-    // const isAdmin = req.userDetails.isAdmin;
-    // if (isAdmin !== 1)
-    //     return res.status(403).send("you are not an admin")
-
     let type = req.query.type
     let model = req.query.model
     let query = `SELECT * FROM RENT WHERE TYPE='${type}'
