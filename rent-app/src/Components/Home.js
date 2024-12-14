@@ -2,7 +2,7 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import car1 from '../car1.jpg';
 import car2 from '../car2.jpg';
-import car3 from '../car3.jpg';
+import car6 from '../car6.webp';
 
 const Home = () => {
     return (
@@ -30,7 +30,7 @@ const Home = () => {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src={car3}
+          src={car6}
         />
         <Carousel.Caption>
           <h3>Make your trip enjoyable</h3>
