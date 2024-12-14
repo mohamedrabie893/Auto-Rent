@@ -58,7 +58,7 @@ const RegisterForm = () => {
           required
         />
         <br />
-        <label>
+        <label style={{display: 'none' }}>
           <input
             type="checkbox"
             ref={isAdmin}

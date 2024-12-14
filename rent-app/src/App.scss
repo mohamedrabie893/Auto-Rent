@@ -90,3 +90,22 @@ button:hover {
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
+
+ul {
+  list-style-type: none;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+
+  .item-actions {
+    button {
+      margin: 0 .3rem;
+    }
+  }
+}

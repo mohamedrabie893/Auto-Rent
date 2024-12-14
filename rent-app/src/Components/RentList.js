@@ -85,12 +85,12 @@ const RentList = () => {
   }
 
   const editRent = (rentID, quantity) => {
-    fetch(`http://localhost:555/rents/edit`, {
+    fetch(`http://localhost:555/rents/edit/${rentID}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({id: rentID, quantity}), 
+      body: JSON.stringify({quantity}), 
       credentials:"include"
     })
     .then((response) => {
@@ -131,19 +131,22 @@ const RentList = () => {
       {message}
       <ul>
         {rents.map((item) => (
-          <li key={item.ID}>
-            {item.TYPE} - {item.MODEL} (Quantity: {item.QUANTITY})
+          <li className='list-item' key={item.ID}>
+            <div className='item-detail'>
+              {item.TYPE} - {item.MODEL} (Quantity: {item.QUANTITY})
+            </div>
+            <div className='item-actions'>
+              {isLoggedin &&
+                <Button disabled={item.QUANTITY === 0 || item.QUANTITY < 0} variant='dark' onClick={() => bookRent(item.TYPE, item.MODEL, item.ID, item.QUANTITY)}>Book Now</Button>
+              }
 
-            {isLoggedin &&
-              <Button disabled={item.QUANTITY === 0 || item.QUANTITY < 0} variant='dark' onClick={() => bookRent(item.TYPE, item.MODEL, item.ID, item.QUANTITY)}>Book Now</Button>
-            }
-
-            {localStorage.getItem('isAdmin') === 'true' && 
-                <>
-                  <Button variant='warning' onClick={() => editRent(item.TYPE, item.MODEL, item.ID)}>Edit</Button>
-                  <Button variant='danger' onClick={() => deleteRent(item.TYPE, item.MODEL, item.ID, 5)}>Delete</Button>
-                </>
-            }
+              {localStorage.getItem('isAdmin') === 'true' && 
+                  <>
+                    {/* <Button variant='warning' onClick={() => editRent(item.ID, 5)}>Edit</Button> */}
+                    <Button variant='danger' onClick={() => deleteRent(item.TYPE, item.MODEL, item.ID)}>Delete</Button>
+                  </>
+              }
+            </div>
           </li>
         ))}
       </ul>

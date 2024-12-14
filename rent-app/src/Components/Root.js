@@ -70,6 +70,7 @@ const Root = () => {
                                 <Nav.Link href="/">Home</Nav.Link>
                                 <Nav.Link href="/rents">Rents</Nav.Link>
                                 {isLoggedin && isAdmin && <Nav.Link href="/add-rent">Add Rent</Nav.Link>}
+                                {isLoggedin && isAdmin && <Nav.Link href="/users">Users</Nav.Link>}
                                 {isLoggedin && <Nav.Link href="/my-rents">My Rents</Nav.Link>}
                             </Nav>
                             {isLoggedin ? (
@@ -90,7 +91,7 @@ const Root = () => {
             </div>
 
             <div className='container app-container'>
-                <Outlet />
+                <Outlet context={{ isLoggedin, setIsLoggedin }} />
             </div>
         </>
 

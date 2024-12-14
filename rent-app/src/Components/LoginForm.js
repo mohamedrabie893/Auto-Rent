@@ -1,7 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useOutletContext } from 'react-router-dom';
 
 const LoginForm = () => {
+  const { setIsLoggedin } = useOutletContext();
+
   const navigate = useNavigate();
   let email = useRef();
   let password = useRef();
@@ -20,6 +23,7 @@ const LoginForm = () => {
       const userData = await response.json();
 
       console.log(userData);
+      setIsLoggedin(true);
       localStorage.setItem('isAdmin', userData.admin);
       localStorage.setItem('token', userData.token);
       localStorage.setItem('userId', userData.id);
@@ -29,7 +33,7 @@ const LoginForm = () => {
 
     catch (error) {
       setMessage(error.message);
-      alert(message);
+      alert(error.message);
     };
   };
 

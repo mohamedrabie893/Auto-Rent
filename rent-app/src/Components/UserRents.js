@@ -49,8 +49,10 @@ const UserRents = () => {
       {message}
       <ul>
         {rents.map((item, idx) => (
-          <li key={idx}>
-            {item.TYPE} - {item.MODEL} (Quantity: {item.QUANTITY})
+          <li className='list-item' key={idx}>
+            <div className='item-detail'>
+                {item.TYPE} - {item.MODEL}
+            </div>
           </li>
         ))}
       </ul>

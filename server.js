@@ -148,20 +148,6 @@ server.get(`/rents`, (req, res) => {
     })
 })
 
-server.get(`/rents/search/:id`, (req, res) => {
-    const query = `SELECT * FROM RENT WHERE ID=${req.params.id}`
-    db.get(query, (err, row) => {
-        if (err) {
-            console.log(err)
-            return res.send(err)
-        }
-        else if (!row)
-            return res.send(`rent with id ${req.params.id} not found`)
-        else
-            return res.send(row)
-    })
-})
-
 server.get(`/userrents/:id`, (req, res) => {
     // const query = `SELECT * FROM BOOKING WHERE USER_ID=${req.params.id}`
     const query = `SELECT 
@@ -186,7 +172,7 @@ WHERE
     })
 })
 
-server.put(`/rents/edit`, (req, res) => {
+server.put(`/rents/edit/:id`, (req, res) => {
     // const isAdmin = req.userDetails.isAdmin;
     // if (isAdmin !== 1)
     //     return res.status(403).send("you are not an admin")
@@ -202,27 +188,6 @@ server.put(`/rents/edit`, (req, res) => {
             return res.send(`rent updated successfully`)
         }
     })
-})
-
-server.get(`/rents/search`, (req, res) => {
-    let type = req.query.type
-    let model = req.query.model
-    let query = `SELECT * FROM RENT WHERE QUANTITY>0`
-    if (type)
-        query += ` AND TYPE='${type}'`
-    if (model)
-        query += ` AND MODEL='${model}'`
-
-    db.all(query, (err, rows) => {
-        if (err) {
-            console.log(err)
-            return res.send(err)
-        }
-        else {
-            return res.json(rows)
-        }
-    })
-
 })
 
 server.put(`/book`, (req, res) => {
@@ -273,6 +238,41 @@ server.put(`/book`, (req, res) => {
     }
     )
 })
+
+// Fetch all users (Admin only)
+server.get('/users', (req, res) => {
+    // const isAdmin = req.userDetails.isAdmin; // Extract admin status from token
+    // if (!isAdmin) {
+    //     return res.status(403).send('Access denied. Admins only.');
+    // }
+
+    const query = `SELECT * FROM USER`
+    db.all(query, (err, rows) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        else {
+            return res.json(rows)
+        }
+    })
+});
+
+server.delete(`/users/deleteuser`, (req, res) => {
+    const userID = req.body.id
+    let query = `DELETE FROM USER WHERE ID=?`
+
+    db.run(query, [userID], (err) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        else {
+            return res.send(`User deleted successfully`)
+        }
+    })
+
+});
 
 server.listen(port, () => {
     console.log(`server started at port ${port}`)
