@@ -9,6 +9,7 @@ const LoginForm = () => {
   let email = useRef();
   let password = useRef();
   const [message, setMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const loginUser = async () => {
     try {
@@ -50,13 +51,18 @@ const LoginForm = () => {
           required
         />
         <br />
+        <div className='password-wrapper'>
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Password"
           ref={password}
           onChange={(e) => (password.current.value = e.target.value)}
           required
         />
+        <button className='show-password-btn' type="button" onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? 'Hide' : 'Show'}
+        </button>
+        </div>
         <br />
         <button type="button" onClick={loginUser}>
           Login

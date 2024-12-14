@@ -109,3 +109,27 @@ ul {
     }
   }
 }
+
+.password-wrapper {
+  position: relative;
+  input {
+    width: 100%;
+  }
+  button {
+    &.show-password-btn {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+      position: absolute;
+      top: 2px;
+      right: -6px;
+      text-decoration: underline;
+      transition: all 0.5s ease-in-out;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

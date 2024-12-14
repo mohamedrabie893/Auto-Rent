@@ -7,6 +7,7 @@ const RegisterForm = () => {
   let email = useRef();
   let password = useRef();
   const [message, setMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   
   const registerUser = () => {
     fetch('http://localhost:555/user/register', {
@@ -50,13 +51,19 @@ const RegisterForm = () => {
           required
         />
         <br />
+        <div className='password-wrapper'>
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Password"
           ref={password}
-          onChange={(e) => (password.current.value = e.target.value)} 
+          onChange={(e) => (password.current.value = e.target.value)}
           required
         />
+        <button className='show-password-btn' type="button" onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? 'Hide' : 'Show'}
+        </button>
+        </div>
+
         <br />
         <label style={{display: 'none' }}>
           <input
