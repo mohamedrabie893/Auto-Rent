@@ -65,6 +65,7 @@ const RentList = () => {
   }, []);
 
   return (
+    <div className='container app-container'>
     <div className="form-section">
       <h3>All Users</h3>
       {message}
@@ -85,6 +86,7 @@ const RentList = () => {
           </li>
         ))}
       </ul>
+    </div>
     </div>
   );
 };

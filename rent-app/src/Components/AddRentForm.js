@@ -29,6 +29,7 @@ const AddRentForm = () => {
     });
   };
   return (
+    <div className='container app-container'>
     <div className="form-section">
       <h3>Add Rent (Admin)</h3>
       <form>
@@ -56,6 +57,7 @@ const AddRentForm = () => {
         <button type="button" onClick={addRent}>Add Rent</button>
       </form>
       {message && <p>{message}</p>} 
+    </div>
     </div>
   );
 };

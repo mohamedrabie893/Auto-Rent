@@ -31,7 +31,7 @@ const Root = () => {
             }
       
             setIsLoggedin(false);
-            localStorage.removeItem('token');
+            localStorage.clear();
             navigate('/');
           }
       
@@ -90,9 +90,8 @@ const Root = () => {
                 </div>
             </div>
 
-            <div className='container app-container'>
-                <Outlet context={{ isLoggedin, setIsLoggedin }} />
-            </div>
+            
+            <Outlet context={{ isLoggedin, setIsLoggedin }} />
         </>
 
     )

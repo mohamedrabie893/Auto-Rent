@@ -134,7 +134,7 @@ const RentList = () => {
   }, []);
 
   return (
-    <>
+    <div className='container app-container'>
       {isShowEdit &&
           <div className="form-section">
             <h3>Edit Quantity For {editItem.TYPE} - {editItem.MODEL}</h3>
@@ -177,7 +177,7 @@ const RentList = () => {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -44,6 +44,7 @@ const UserRents = () => {
     }, []);
 
     return (
+        <div className='container app-container'>
         <div className="form-section">
       <h3>My Rents</h3>
       {message}
@@ -56,6 +57,7 @@ const UserRents = () => {
           </li>
         ))}
       </ul>
+    </div>
     </div>
     )
 }

@@ -40,6 +40,7 @@ const LoginForm = () => {
 
 
   return (
+    <div className='container app-container'>
     <div className="form-section">
       <h3>User Login</h3>
       <form>
@@ -69,6 +70,7 @@ const LoginForm = () => {
         </button>
       </form>
       <p>{message}</p>
+    </div>
     </div>
   );
 };

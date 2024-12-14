@@ -32,6 +32,7 @@ const RegisterForm = () => {
     isAdmin.current.value = false;
   }, []);
   return (
+    <div className='container app-container'>
     <div className="form-section">
       <h3>User Registration</h3>
       <form>
@@ -79,6 +80,7 @@ const RegisterForm = () => {
         </button>
       </form>
       <p>{message}</p> 
+    </div>
     </div>
   );
 };
